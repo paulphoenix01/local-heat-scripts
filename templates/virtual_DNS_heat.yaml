@@ -1,0 +1,49 @@
+heat_template_version: 2015-04-30
+
+description: >
+  HOT template to create a VirtualDns:
+
+parameters:
+  name:
+    type: string
+    description: name for the VirtualDns
+    # required: optional
+  virtual_dns_data:
+    type: json
+    description: virtual DNS data
+  virtual_dns_data_domain_name:
+    type: string
+    description: Default domain name for this virtual DNS server
+    # operations: CRUD
+    # required: true
+  virtual_dns_data_record_order:
+    type: string
+    description: Order of DNS load balancing, fixed, random, round-robin
+    # operations: CRUD
+    # required: optional
+  virtual_dns_data_default_ttl_seconds:
+    type: number
+    description: Default Time To Live for DNS records
+    # operations: CRUD
+    # required: optional
+  fq_name:
+    type: string
+    description: fq_name for the VirtualDns
+  domain:
+    type: string
+    description: domain for the VirtualDns
+    # required: optional
+
+resources:
+  template_VirtualDns:
+    type: OS::ContrailV2::VirtualDns
+    properties:
+      name: { get_param: name }
+      fq_name: { get_param: fq_name }
+      virtual_dns_data:
+       {
+          virtual_dns_data_domain_name: { get_param: virtual_dns_data_domain_name },
+          virtual_dns_data_record_order: { get_param: virtual_dns_data_record_order },
+          virtual_dns_data_default_ttl_seconds: { get_param: virtual_dns_data_default_ttl_seconds }
+       }
+      domain: { get_param: domain }

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ $# -ne 3 ]]; then
+	echo "Usage: create-vm2 tenant-name server-name ipam-name" 
+	echo "Example: create-vm2 demo vm2 demo-ipam"
+        exit 1
+fi
+
+args=("$@")
+TENANT=${args[0]}
+SERVER_NAME=${args[1]}
+IPAM=${args[2]}
+IP_PREFIX="192.168.2.0/24"
+DEFAULT_GW="192.168.2.1"
+IMAGE="ubuntu-stress-test"
+FLAVOR="m1.medium"
+
+NET_NAME=demo-vn2
+SUBNET_NAME=demo-vn2-subnet
+
+heat --os-tenant-name $TENANT stack-create $NET_NAME -f $TMPLT_DIR/create_vm.yaml -P "net_name=$NET_NAME;subnet_name=$SUBNET_NAME;ip_prefix=$IP_PREFIX;default_gateway=$DEFAULT_GW;ipam=default-domain:$TENANT:$IPAM;server_name=$SERVER_NAME;image=$IMAGE;flavor=$FLAVOR"

@@ -1,0 +1,5 @@
+
+export ROOT_DIR=$PWD
+export TMPLT_DIR=$PWD/templates
+export PATH=$PWD/bin:$PATH
+export PORTAL_PORT=8197

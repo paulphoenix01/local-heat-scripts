@@ -1,0 +1,19 @@
+#-- Setting up execution environment
+#1. source /etc/contrail/openstackrc
+#2. cd ~/heat-appformix/
+#3. source set_env
+
+./create-ipam demo
+sleep 5
+./security-group demo
+sleep 5
+./create-vm1 demo demo-vm1 demo-ipam
+./create-vm2 demo demo-vm2 demo-ipam
+sleep 30
+./create-attach-policy demo demo-policy demo-vn1 demo-vn2
+
+
+# Utlities
+#slist demo
+#sshow demo demo-policy 
+#heat --os-tenant-name demo stack-delete demo-vn

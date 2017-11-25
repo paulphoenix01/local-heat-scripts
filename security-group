@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]; then
+        echo "Usage: security-group tenant-name"
+        echo "Example: security-group demo"
+        exit 1
+fi
+
+args=("$@")
+TENANT=${args[0]}
+heat --os-tenant-name $TENANT stack-create $TENANT-security-group  -f $TMPLT_DIR/security_group.yaml  -P "name=$TENANT-security-group"
+

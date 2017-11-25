@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [[ $# -ne 4 ]]; then
+	echo "Usage: create-attach-policy tenant-name policy-name net1-name net2-name"
+	echo "Example: create-attach-policy demo demo-policy demo-vn1 demo-vn2"
+        exit 1
+fi
+
+args=("$@")
+TENANT=${args[0]}
+POLICY_NAME=${args[1]}
+NET_1_NAME=${args[2]}
+NET_2_NAME=${args[3]}
+
+heat --os-tenant-name $TENANT stack-create attach-$TENANT-policy -f $TMPLT_DIR/network_attach_policy.yaml -P "policy_name=$POLICY_NAME;net_1_name=default-domain:$TENANT:$NET_1_NAME;net_2_name=default-domain:$TENANT:$NET_2_NAME"
